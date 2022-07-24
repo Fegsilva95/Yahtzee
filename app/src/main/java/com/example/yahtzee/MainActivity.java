@@ -1,6 +1,9 @@
 package com.example.yahtzee;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,9 +18,12 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView dicesRecyclerView;
+    RecyclerView rulesRecyclerView;
     ActivityResultLauncher<Intent> launcher;
     List<ObjectValue> dices;
+    List<ObjectValue> rules;
     DiceAdapter diceAdapter;
+    RuleAdapter ruleAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +56,42 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        diceAdapter = new DiceAdapter(dices,listener);
+        diceAdapter = new DiceAdapter(dices, listener);
         dicesRecyclerView.setAdapter(diceAdapter);
 
+        rules = new ArrayList<ObjectValue>(){{
+            add (new ObjectValue("Rule 1"));
+            add (new ObjectValue("Rule 2"));
+            add (new ObjectValue("Rule 3"));
+            add (new ObjectValue("Rule 4"));
+            add (new ObjectValue("Rule 5"));
+            add (new ObjectValue("Rule 6"));
+        }};
+
+        rulesRecyclerView = findViewById(R.id.pointsRecyclerView);
+        LinearLayoutManager rulesLayoutManager = new LinearLayoutManager(this);
+        rulesRecyclerView.setLayoutManager(rulesLayoutManager);
+
+        RuleAdapter.OnRuleClickListener ruleListener = new RuleAdapter.OnRuleClickListener() {
+            @Override
+            public void onRuleClick(View source, int ruleNumber) {
+                ObjectValue rule = rules.get(ruleNumber);
+                rule.setValue(0);
+                ruleAdapter.notifyItemChanged(ruleNumber);
+            }
+        };
+
+        ruleAdapter = new RuleAdapter(rules, ruleListener);
+        rulesRecyclerView.setAdapter(ruleAdapter);
+
+        launcher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+
+                    }
+                });
     }
 
     public void credits(View view){

@@ -11,42 +11,42 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class RuleAdapter extends RecyclerView.Adapter<RuleAdapter.DiceViewHolder>{
-    private List<ObjectValue> dices;
-    private DiceAdapter.OnDiceCLickListener listener;
+public class RuleAdapter extends RecyclerView.Adapter<RuleAdapter.RuleViewHolder>{
+    private List<ObjectValue> rules;
+    private RuleAdapter.OnRuleClickListener listener;
 
-    public RuleAdapter(List<ObjectValue> dices, DiceAdapter.OnDiceCLickListener listener) {
-        this.dices = dices;
+    public RuleAdapter(List<ObjectValue> rules, RuleAdapter.OnRuleClickListener listener) {
+        this.rules = rules;
         this.listener = listener;
     }
 
     @NonNull
     @Override
-    public RuleAdapter.DiceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RuleAdapter.RuleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View diceView = inflater.inflate(R.layout.rules_layout, parent, false);
-        RuleAdapter.DiceViewHolder holder = new RuleAdapter.DiceViewHolder(diceView);
+        View ruleView = inflater.inflate(R.layout.rules_layout, parent, false);
+        RuleViewHolder holder = new RuleViewHolder(ruleView);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RuleAdapter.DiceViewHolder holder, int position) {
-        ObjectValue dice = dices.get(position);
-        holder.textViewRuleName.setText(dice.getName());
-        holder.textViewRuleValue.setText(dice.getValue().toString());
+    public void onBindViewHolder(@NonNull RuleAdapter.RuleViewHolder holder, int position) {
+        ObjectValue rule = rules.get(position);
+        holder.textViewRuleName.setText(rule.getName());
+        holder.textViewRuleValue.setText(rule.getValue().toString());
     }
 
     @Override
     public int getItemCount() {
-        return dices.size();
+        return rules.size();
     }
 
-    public class DiceViewHolder  extends RecyclerView.ViewHolder {
+    public class RuleViewHolder extends RecyclerView.ViewHolder {
         private TextView textViewRuleName;
         private TextView textViewRuleValue;
 
-        public DiceViewHolder(@NonNull View itemView) {
+        public RuleViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewRuleName = itemView.findViewById(R.id.textViewRuleName);
             textViewRuleValue = itemView.findViewById(R.id.textViewRuleValue);
@@ -54,13 +54,13 @@ public class RuleAdapter extends RecyclerView.Adapter<RuleAdapter.DiceViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onDiceClick(v, getAdapterPosition());
+                    listener.onRuleClick(v, getAdapterPosition());
                 }
             });
         }
     }
 
-    public interface OnDiceCLickListener {
-        void onDiceClick(View source, int position);
+    public interface OnRuleClickListener {
+        void onRuleClick(View source, int position);
     }
 }
