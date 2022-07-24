@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     DiceAdapter diceAdapter;
     RuleAdapter ruleAdapter;
     TextView totalPoints;
+    TextView highestScoreValue;
+    Integer highestScore = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
                         diceAdapter.notifyItemChanged(i);
                     }
 
-                    totalPoints = findViewById(R.id.totalPointsTextView);
-                    totalPoints.setText("Total points: " + totalPointsValue());
+                    totalPoints = findViewById(R.id.totalPointsValue);
+                    totalPoints.setText(totalPointsValue().toString());
                 } else {
                     System.out.println("Regra não aplicada");
                 }
@@ -139,13 +142,20 @@ public class MainActivity extends AppCompatActivity {
         } else {
             verify.restartValues(rules);
             verify.restartValues(dices);
-            totalPoints.setText("Total points: 0");
             for (Integer i = 0; i <= rules.size(); i++) {
                 ruleAdapter.notifyItemChanged(i);
             }
             for (Integer i = 0; i <= dices.size(); i++) {
                 diceAdapter.notifyItemChanged(i);
             }
+
+            highestScoreValue = findViewById(R.id.highestScoreValue);
+            Integer totalPValue = Integer.parseInt(totalPoints.getText().toString());
+            System.out.println(totalPValue);
+            if(totalPValue > highestScore){
+                highestScoreValue.setText(totalPValue.toString());
+            }
+            totalPoints.setText("0");
         }
     }
 }

@@ -87,4 +87,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/totalPointsTextView" />
 
+    <TextView
+        android:id="@+id/totalPointsValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="0"
+        app:layout_constraintEnd_toStartOf="@+id/creditsButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/totalPointsTextView"
+        app:layout_constraintTop_toBottomOf="@+id/pointsRecyclerView" />
+
+    <TextView
+        android:id="@+id/highestScoreValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="0"
+        app:layout_constraintEnd_toStartOf="@+id/creditsButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/highestScoreTextView"
+        app:layout_constraintTop_toBottomOf="@+id/totalPointsValue" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

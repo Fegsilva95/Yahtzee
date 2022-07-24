@@ -104,27 +104,27 @@ public class ObjectValue {
     }
 
     public Integer threeOfAKind(List<ObjectValue> dices){
-        return 0;
+        return 1;
     }
 
     public Integer fourOfAKind(List<ObjectValue> dices){
-        return 0;
+        return 1;
     }
 
     public Integer fullHouse(List<ObjectValue> dices){
-        return 0;
+        return 1;
     }
 
     public Integer smallStraight(List<ObjectValue> dices){
-        return 0;
+        return 1;
     }
 
     public Integer largeStraight(List<ObjectValue> dices){
-        return 0;
+        return 1;
     }
 
     public Integer yahtzee(List<ObjectValue> dices){
-        return 0;
+        return 1;
     }
 
     public Integer chance(List<ObjectValue> dices){
