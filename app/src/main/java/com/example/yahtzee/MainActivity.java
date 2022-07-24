@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     List<ObjectValue> rules;
     DiceAdapter diceAdapter;
     RuleAdapter ruleAdapter;
+    TextView totalPoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,15 +93,18 @@ public class MainActivity extends AppCompatActivity {
                 if(result != 0){
                     rule.setValue(result);
                     rule.restartValues(dices);
+                    for (Integer i = 0; i <= dices.size(); i++) {
+                        diceAdapter.notifyItemChanged(i);
+                    }
+
+                    totalPoints = findViewById(R.id.totalPointsTextView);
+                    totalPoints.setText("Total points: " + totalPointsValue());
                 } else {
                     System.out.println("Regra não aplicada");
                 }
 
                 ruleAdapter.notifyItemChanged(ruleNumber);
-                System.out.println(result);
                 result = 0;
-                System.out.println("result");
-                System.out.println(result);
             }
         };
 
@@ -110,19 +115,16 @@ public class MainActivity extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
-                    public void onActivityResult(ActivityResult result) {
-//                        Bundle extras;
-//                        extras = result.getData().getExtras();
-//                        String nome = extras.getString("nome");
-//                        String especie = extras.getString("especie");
-//
-//                        Avistamento novoAvistamento = new Avistamento(nome,especie);
-//                        repo.addAvistamento(novoAvistamento);
-//
-//                        avistamentoAdapter = new AvistamentoAdapter(repo.getAvistamentos(),listener);
-//                        recyclerAvistamento.setAdapter(avistamentoAdapter);
-                    }
+                    public void onActivityResult(ActivityResult result) {}
                 });
+    }
+
+    public Integer totalPointsValue(){
+        Integer result = 0;
+        for (ObjectValue rule : rules) {
+            result += rule.getValue();
+        }
+        return result;
     }
 
     public void credits(View view){
@@ -136,6 +138,14 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Alguma rule vazia");
         } else {
             verify.restartValues(rules);
+            verify.restartValues(dices);
+            totalPoints.setText("Total points: 0");
+            for (Integer i = 0; i <= rules.size(); i++) {
+                ruleAdapter.notifyItemChanged(i);
+            }
+            for (Integer i = 0; i <= dices.size(); i++) {
+                diceAdapter.notifyItemChanged(i);
+            }
         }
     }
 }
