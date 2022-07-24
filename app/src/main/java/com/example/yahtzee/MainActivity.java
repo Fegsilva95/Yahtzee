@@ -60,12 +60,19 @@ public class MainActivity extends AppCompatActivity {
         dicesRecyclerView.setAdapter(diceAdapter);
 
         rules = new ArrayList<ObjectValue>(){{
-            add (new ObjectValue("Rule 1"));
-            add (new ObjectValue("Rule 2"));
-            add (new ObjectValue("Rule 3"));
-            add (new ObjectValue("Rule 4"));
-            add (new ObjectValue("Rule 5"));
-            add (new ObjectValue("Rule 6"));
+            add (new ObjectValue("Aces"));
+            add (new ObjectValue("Twos"));
+            add (new ObjectValue("Threes"));
+            add (new ObjectValue("Fours"));
+            add (new ObjectValue("Fives"));
+            add (new ObjectValue("Sixes"));
+            add (new ObjectValue("Three Of A Kind"));
+            add (new ObjectValue("Four Of A Kind"));
+            add (new ObjectValue("Full House"));
+            add (new ObjectValue("Small Straight"));
+            add (new ObjectValue("Large Straight"));
+            add (new ObjectValue("Yahtzee"));
+            add (new ObjectValue("Chance"));
         }};
 
         rulesRecyclerView = findViewById(R.id.pointsRecyclerView);
@@ -76,8 +83,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRuleClick(View source, int ruleNumber) {
                 ObjectValue rule = rules.get(ruleNumber);
-                rule.setValue(0);
+                if(!rule.verifyEmptyValues(dices)){
+                    System.out.println("Empty Dices");
+                }
+                Integer result = rule.verifyRules(dices, ruleNumber);
+
+                if(result != 0){
+                    rule.setValue(result);
+                    rule.restartValues(dices);
+                } else {
+                    System.out.println("Regra não aplicada");
+                }
+
                 ruleAdapter.notifyItemChanged(ruleNumber);
+                System.out.println(result);
+                result = 0;
+                System.out.println("result");
+                System.out.println(result);
             }
         };
 
@@ -89,7 +111,16 @@ public class MainActivity extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-
+//                        Bundle extras;
+//                        extras = result.getData().getExtras();
+//                        String nome = extras.getString("nome");
+//                        String especie = extras.getString("especie");
+//
+//                        Avistamento novoAvistamento = new Avistamento(nome,especie);
+//                        repo.addAvistamento(novoAvistamento);
+//
+//                        avistamentoAdapter = new AvistamentoAdapter(repo.getAvistamentos(),listener);
+//                        recyclerAvistamento.setAdapter(avistamentoAdapter);
                     }
                 });
     }
@@ -97,5 +128,14 @@ public class MainActivity extends AppCompatActivity {
     public void credits(View view){
         Intent intent = new Intent(MainActivity.this, CreditsActivity.class);
         launcher.launch(intent);
+    }
+
+    public void restart(View view){
+        ObjectValue verify = new ObjectValue("");
+        if(!verify.verifyEmptyValues(rules)){
+            System.out.println("Alguma rule vazia");
+        } else {
+            verify.restartValues(rules);
+        }
     }
 }
