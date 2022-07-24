@@ -77,29 +77,60 @@ public class ObjectValue {
                 result = verifyNumbers(dices, 6);
                 break;
             case 6:
-                result = 6;
+                result = threeOfAKind(dices);
                 break;
             case 7:
-                result = 7;
+                result = fourOfAKind(dices);
                 break;
             case 8:
-                result = 8;
+                result = fullHouse(dices);
                 break;
             case 9:
-                result = 9;
+                result = smallStraight(dices);
                 break;
             case 10:
-                result = 10;
+                result = largeStraight(dices);
                 break;
             case 11:
-                result = 11;
+                result = yahtzee(dices);
                 break;
             case 12:
-                result = 12;
+                result = chance(dices);
                 break;
             default:
-                result = 13;
                 break;
+        }
+        return result;
+    }
+
+    public Integer threeOfAKind(List<ObjectValue> dices){
+        return 0;
+    }
+
+    public Integer fourOfAKind(List<ObjectValue> dices){
+        return 0;
+    }
+
+    public Integer fullHouse(List<ObjectValue> dices){
+        return 0;
+    }
+
+    public Integer smallStraight(List<ObjectValue> dices){
+        return 0;
+    }
+
+    public Integer largeStraight(List<ObjectValue> dices){
+        return 0;
+    }
+
+    public Integer yahtzee(List<ObjectValue> dices){
+        return 0;
+    }
+
+    public Integer chance(List<ObjectValue> dices){
+        Integer result = 0;
+        for (ObjectValue dice : dices){
+            result += dice.getValue();
         }
         return result;
     }
