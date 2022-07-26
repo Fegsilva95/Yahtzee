@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             public void onRuleClick(View source, int ruleNumber) {
                 ObjectValue rule = rules.get(ruleNumber);
                 if(!rule.verifyEmptyValues(dices)){
-                    System.out.println("Empty Dices");
+                    Toast.makeText(getApplicationContext(), "Dices are empty.", Toast.LENGTH_SHORT).show();
                 }
                 Integer result = rule.verifyRules(dices, ruleNumber);
 
@@ -120,17 +120,17 @@ public class MainActivity extends AppCompatActivity {
                     totalPoints.setText(totalPointsValue().toString());
 
                 } else {
-                    System.out.println("Regra não aplicada");
+                    Toast.makeText(getApplicationContext(), "Rule don't applied.", Toast.LENGTH_SHORT).show();
                 }
             }
         };
 
         ruleAdapter = new RuleAdapter(rules, ruleListener);
+        rulesRecyclerView.setAdapter(ruleAdapter);
         getRulesValue();
         for (Integer i = 0; i < rules.size(); i++) {
             ruleAdapter.notifyItemChanged(i);
         };
-        rulesRecyclerView.setAdapter(ruleAdapter);
 
         launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -152,12 +152,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void setRuleValue(Integer ruleNumber, Integer value){
         editor.putInt(ruleNumber.toString(), value);
-    }
-
-    public Integer getRuleValue(Integer ruleNumber){
-        Integer ruleValue = sharedPreferences.getInt(ruleNumber.toString(), 0);
-        ruleAdapter.notifyItemChanged(ruleNumber);
-        return ruleValue;
     }
 
     public void getRulesValue(){

@@ -1,5 +1,6 @@
 package com.example.yahtzee;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.*;
 
@@ -105,28 +106,27 @@ public class ObjectValue {
     }
 
     public Integer threeOfAKind(List<ObjectValue> dices){
-
-        return 1;
+       return threeOfKind(dices) ? sumDices(dices) : 0;
     }
 
     public Integer fourOfAKind(List<ObjectValue> dices){
-        return 1;
+        return fourOfKind(dices) ? sumDices(dices) : 0;
     }
 
     public Integer fullHouse(List<ObjectValue> dices){
-        return 1;
+        return _fullHouse(dices) ? 25 : 0;
     }
 
     public Integer smallStraight(List<ObjectValue> dices){
-        return 1;
+        return _smallStraight(dices) ? 30 : 0;
     }
 
     public Integer largeStraight(List<ObjectValue> dices){
-        return 1;
+        return _largeStraight(dices) ? 40 : 0;
     }
 
     public Integer yahtzee(List<ObjectValue> dices){
-        return 1;
+        return new HashSet<ObjectValue>(dices).size() <= 1 ? 50 : 0;
     }
 
     public Integer sumDices(List<ObjectValue> dices){
@@ -135,5 +135,109 @@ public class ObjectValue {
             result += dice.getValue();
         }
         return result;
+    }
+
+    public boolean threeOfKind(List<ObjectValue> dices){
+        Integer dice1 = dices.get(0).getValue();
+        Integer dice2 = dices.get(1).getValue();
+        Integer dice3 = dices.get(2).getValue();
+        Integer dice4 = dices.get(3).getValue();
+        Integer dice5 = dices.get(4).getValue();
+
+        if(dice1 == dice2 && dice1 == dice3 || dice1 == dice2 && dice1 == dice4 || dice1 == dice2 && dice1 == dice5
+        || dice1 == dice3 && dice1 == dice4 || dice1 == dice3 && dice1 == dice5 || dice1 == dice4 && dice1 == dice5
+        || dice2 == dice3 && dice2 == dice4 || dice2 == dice3 && dice2 == dice5 || dice3 == dice4 && dice3 == dice5)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean fourOfKind(List<ObjectValue> dices){
+        Integer dice1 = dices.get(0).getValue();
+        Integer dice2 = dices.get(1).getValue();
+        Integer dice3 = dices.get(2).getValue();
+        Integer dice4 = dices.get(3).getValue();
+        Integer dice5 = dices.get(4).getValue();
+
+        if(dice1 == dice2 && dice1 == dice3 && dice1 == dice4
+        || dice1 == dice5 && dice1 == dice3 && dice1 == dice4
+        || dice1 == dice2 && dice1 == dice3 && dice1 == dice5
+        || dice2 == dice5 && dice2 == dice3 && dice2 == dice4)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean _smallStraight(List<ObjectValue> dices){
+        Integer dice1 = dices.get(0).getValue();
+        Integer dice2 = dices.get(1).getValue();
+        Integer dice3 = dices.get(2).getValue();
+        Integer dice4 = dices.get(3).getValue();
+        Integer dice5 = dices.get(4).getValue();
+
+        if(((dice1 == 1 || dice2 == 1 || dice3 == 1 || dice4 == 1 || dice5 == 1 ) &&
+        (dice1 == 2 || dice2 == 2 || dice3 == 2 || dice4 == 2 || dice5 == 2 ) &&
+        (dice1 == 3 || dice2 == 3 || dice3 == 3 || dice4 == 3 || dice5 == 3 ) &&
+        (dice1 == 4 || dice2 == 4 || dice3 == 4 || dice4 == 4 || dice5 == 4 )) ||
+        ((dice1 == 2 || dice2 == 2 || dice3 == 2 || dice4 == 2 || dice5 == 2 ) &&
+        (dice1 == 3 || dice2 == 3 || dice3 == 3 || dice4 == 3 || dice5 == 3 ) &&
+        (dice1 == 4 || dice2 == 4 || dice3 == 4 || dice4 == 4 || dice5 == 4 ) &&
+        (dice1 == 5 || dice2 == 5 || dice3 == 5 || dice4 == 5 || dice5 == 5 )) ||
+        ((dice1 == 3 || dice2 == 3 || dice3 == 3 || dice4 == 3 || dice5 == 3 ) &&
+        (dice1 == 4 || dice2 == 4 || dice3 == 4 || dice4 == 4 || dice5 == 4 ) &&
+        (dice1 == 5 || dice2 == 5 || dice3 == 5 || dice4 == 5 || dice5 == 5 ) &&
+        (dice1 == 6 || dice2 == 6 || dice3 == 6 || dice4 == 6 || dice5 == 6 )))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean _largeStraight(List<ObjectValue> dices){
+        Integer dice1 = dices.get(0).getValue();
+        Integer dice2 = dices.get(1).getValue();
+        Integer dice3 = dices.get(2).getValue();
+        Integer dice4 = dices.get(3).getValue();
+        Integer dice5 = dices.get(4).getValue();
+
+        if(((dice1 == 1 || dice2 == 1 || dice3 == 1 || dice4 == 1 || dice5 == 1 ) &&
+        (dice1 == 2 || dice2 == 2 || dice3 == 2 || dice4 == 2 || dice5 == 2 ) &&
+        (dice1 == 3 || dice2 == 3 || dice3 == 3 || dice4 == 3 || dice5 == 3 ) &&
+        (dice1 == 4 || dice2 == 4 || dice3 == 4 || dice4 == 4 || dice5 == 4 ) &&
+        (dice1 == 5 || dice2 == 5 || dice3 == 5 || dice4 == 5 || dice5 == 5 )) ||
+        ((dice1 == 2 || dice2 == 2 || dice3 == 2 || dice4 == 2 || dice5 == 2 ) &&
+        (dice1 == 3 || dice2 == 3 || dice3 == 3 || dice4 == 3 || dice5 == 3 ) &&
+        (dice1 == 4 || dice2 == 4 || dice3 == 4 || dice4 == 4 || dice5 == 4 ) &&
+        (dice1 == 5 || dice2 == 5 || dice3 == 5 || dice4 == 5 || dice5 == 5 ) &&
+        (dice1 == 6 || dice2 == 6 || dice3 == 6 || dice4 == 6 || dice5 == 6 )))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean _fullHouse(List<ObjectValue> dices){
+        Integer dice1 = dices.get(0).getValue();
+        Integer dice2 = dices.get(1).getValue();
+        Integer dice3 = dices.get(2).getValue();
+        Integer dice4 = dices.get(3).getValue();
+        Integer dice5 = dices.get(4).getValue();
+
+        if(dice1 == dice2 && dice3 == dice4  && dice3 == dice5 ||
+        dice1 == dice3 && dice2 == dice4  && dice2 == dice5 ||
+        dice1 == dice4 && dice3 == dice2  && dice3 == dice5 ||
+        dice1 == dice5 && dice3 == dice4  && dice3 == dice2 ||
+        dice2 == dice3 && dice4 == dice5  && dice1 == dice5 ||
+        dice2 == dice4 && dice1 == dice5  && dice1 == dice3 ||
+        dice2 == dice5 && dice1 == dice4  && dice1 == dice3 ||
+        dice3 == dice4 && dice1 == dice2  && dice1 == dice5 ||
+        dice3 == dice5 && dice1 == dice2  && dice1 == dice4 ||
+        dice4 == dice5 && dice1 == dice2  && dice1 == dice3)
+        {
+            return true;
+        }
+        return false;
     }
 }
