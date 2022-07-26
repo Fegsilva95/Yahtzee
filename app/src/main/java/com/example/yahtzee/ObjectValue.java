@@ -126,7 +126,13 @@ public class ObjectValue {
     }
 
     public Integer yahtzee(List<ObjectValue> dices){
-        return new HashSet<ObjectValue>(dices).size() <= 1 ? 50 : 0;
+        Integer dice1 = dices.get(0).getValue();
+        Integer dice2 = dices.get(1).getValue();
+        Integer dice3 = dices.get(2).getValue();
+        Integer dice4 = dices.get(3).getValue();
+        Integer dice5 = dices.get(4).getValue();
+        boolean result = dice1 == dice2 && dice1 == dice3 && dice1 == dice4 && dice1 == dice5;
+        return result ? 50 : 0;
     }
 
     public Integer sumDices(List<ObjectValue> dices){
