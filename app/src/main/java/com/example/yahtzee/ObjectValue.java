@@ -1,6 +1,7 @@
 package com.example.yahtzee;
 
 import java.util.List;
+import java.util.stream.*;
 
 public class ObjectValue {
     public ObjectValue(String name) {
@@ -95,7 +96,7 @@ public class ObjectValue {
                 result = yahtzee(dices);
                 break;
             case 12:
-                result = chance(dices);
+                result = sumDices(dices);
                 break;
             default:
                 break;
@@ -104,6 +105,7 @@ public class ObjectValue {
     }
 
     public Integer threeOfAKind(List<ObjectValue> dices){
+
         return 1;
     }
 
@@ -127,7 +129,7 @@ public class ObjectValue {
         return 1;
     }
 
-    public Integer chance(List<ObjectValue> dices){
+    public Integer sumDices(List<ObjectValue> dices){
         Integer result = 0;
         for (ObjectValue dice : dices){
             result += dice.getValue();
